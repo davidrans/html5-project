@@ -1,0 +1,19 @@
+#devices {
+	float: left;
+	width: 35%;
+	outline: 2px solid blue;
+	height: 500px;
+}
+
+#middle {
+	float: left;
+	width: 30%;
+	height: 500px;
+}
+
+#gearbag {
+	float: left;
+	width: 35%;
+	outline: 2px solid red;
+	height: 500px;
+}
