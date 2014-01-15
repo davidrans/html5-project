@@ -9,6 +9,9 @@ li {
 	height: 500px;
 	overflow: scroll;
 }
+	#devices ul {
+		min-height: 100px;
+	}
 
 #middle {
 	float: left;
