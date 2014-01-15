@@ -1,3 +1,7 @@
+li {
+	display: inline-block;
+}
+
 #devices {
 	float: left;
 	width: 35%;
@@ -19,3 +23,7 @@
 	height: 500px;
 	overflow: scroll;
 }
+
+	#gearbag ul {
+		height: 100%;
+	}

@@ -1,5 +1,6 @@
-var iFixitDevice = function(name) {
-	this.name = name.replace( /\s/, '_' );
+var iFixitDevice = function(name, sorter) {
+	this.name = name.replace( / /, '_' );
+	this.sorter = sorter;
 };
 
 iFixitDevice.prototype.getThumbnail = function() {
@@ -18,9 +19,15 @@ iFixitDevice.prototype.getThumbnail = function() {
 iFixitDevice.prototype.appendToDevices = function() {
 	if( !this.thumbnail )
 		return;
-	
-	(new Element( 
+		
+	var li = new Element('li');
+		
+	$('device-list').adopt( li );
+
+	li.adopt(new Element( 
 		'img#' + this.name, 
 		{ 'src': this.thumbnail }
-	)).inject('get-more', 'before');
-}
+	));
+	
+	this.sorter.addItems( li );
+};
