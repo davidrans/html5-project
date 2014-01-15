@@ -4,39 +4,66 @@
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<script src="./js/mootools-core-1.4.5-full-nocompat-yc.js" type="text/javascript"></script>
 	<script src="./js/mootools-more-1.4.0.1.js" type="text/javascript"></script>
-	<script src="./js/MySQLWrapper.js" type="text/javascript"></script>
+	<script src="./js/Database.js" type="text/javascript"></script>
 	<script src="./js/iFixitDevice.js" type="text/javascript"></script>
 	<script>
-		/*var db = new Database();
+		var db = new Database();
 		db.create();
-		db.insert( 'Macbook Pro', 'ifixit.com/images/macbook_pro.jpg' );
-		db.select( 1 );*/
 		
+		var sortable, offset = 10, gear = [];
+		
+		var requestDevices = new Request.JSON({
+			url: 'https://www.ifixit.com/api/2.0/categories/all',
+			onSuccess: function(response) {
+				for( i = 0; i < 10; i++ )
+				{
+					if( gear.indexOf( response[i] ) === -1 )
+					{
+						var d = new iFixitDevice( response[i], sortable );
+						d.appendToList( 'device-list' );
+					}
+				}
+			}
+		});
+	
 		window.addEvent('domready', function() {
-			var devices = [], offset = 0;
-			
-			var sortable = new Sortables('ul', {
+			sortable = new Sortables('ul', {
 				clone: true,
 				revert: true,
-				opacity: 0.7
+				opacity: 0.7,
+				onStart: function( element, clone ) {
+					this.parent = element.getParent();
+				},
+				onComplete: function( element ) {
+					var p = element.getParent();
+				
+					if( p !== this.parent )
+					{
+						if( p.get('id') === 'gear-list' )
+						{
+							console.log( element.get('name'), element.get('src') );
+							db.insert( element.get('name'), element.get('src') );
+						}
+						else if( p.get('id') === 'device-list' )
+							db.delete( element.get('name') );
+					}
+				}
 			});
 			
-			var requestDevices = new Request.JSON({
-					url: 'https://www.ifixit.com/api/2.0/categories/all',
-					onSuccess: function(response) {
-						var d;
+			db.selectAll( function(length, rows) {
+				for( i = 0; i < length; i++ )
+				{
+					gear.push( rows[i].name );
+					var d = new iFixitDevice( rows[i].name, sortable );
+					d.appendToList( 'gear-list' )
+				}
+			});
 			
-						for( i = 0; i < 10; i++ )
-						{
-							devices.push( d = new iFixitDevice( response[i], sortable ) );
-							d.getThumbnail();
-						}
-					}
-				});
+			requestDevices.get( {'limit': 10, 'offset': 0 } );
 			
 			$('get-more').addEvent( 'click', function() {
 				requestDevices.get( {'limit': 10, 'offset': offset } );
-				offset += 20;
+				offset += 10;
 			});
 		});
 	</script>
