@@ -10,7 +10,7 @@
 		var db = new Database();
 		db.create();
 		
-		var sortable, offset = 10, gear = [];
+		var sortable, gear = [];
 		
 		var deviceRequest = new Request.JSONP({
 			url: 'https://www.ifixit.com/api/1.0/topics/all',
@@ -67,6 +67,14 @@
 				deviceRequest.options.data.offset += 10;
 				deviceRequest.send();
 			});
+			
+			$('empty-gear').addEvent( 'click', function() {
+				db.drop();
+				
+				$$('#gear-list > li').forEach( function(el, idx, arr) {
+					$('device-list').adopt(el);
+				});
+			});
 		});
 	</script>
 </head>
@@ -77,7 +85,7 @@
 		<p><button id="get-more">Get More Devices</button></p>
     </div>
     <div id="middle">
-    
+    	<p><button id="empty-gear">Empty Gearbag</button></p>
     </div>
     <div id="gearbag">
 		<h3>Gear Bag</h3>

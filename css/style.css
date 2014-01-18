@@ -44,7 +44,13 @@ li {
 	width: 20%;
 	height: 500px;
 }
-
+	#middle p {
+		text-align: center;
+	}
+	
+	#middle p button {
+		font-size: 13px;
+	}	
 #gearbag {
 	float: left;
 	width: 40%;
