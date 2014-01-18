@@ -47,6 +47,17 @@ Database.prototype.delete = function( name ) {
 	});
 };
 
+Database.prototype.deleteAll = function( ) {
+	this.db.transaction(function(tx) {
+		tx.executeSql(
+			'DELETE FROM Devices',
+			null,
+			function(transaction, result) { console.log(result); },
+			function(transaction, error) { console.log(error); }
+		);
+	});
+};
+
 Database.prototype.select = function( id ) {
 	this.db.transaction(function(tx) {
 		tx.executeSql(

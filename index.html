@@ -69,7 +69,7 @@
 			});
 			
 			$('empty-gear').addEvent( 'click', function() {
-				db.drop();
+				db.deleteAll();
 				
 				$$('#gear-list > li').forEach( function(el, idx, arr) {
 					$('device-list').adopt(el);
