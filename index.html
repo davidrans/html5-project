@@ -19,9 +19,6 @@
 				limit: 10,
 				offset: 0
 			},
-			onRequest: function(url) {
-				console.log( 'going' );
-			},
 			onComplete: function(data) {
 				for( var i = 0; i < data.length; i++ )
 				{
@@ -48,10 +45,7 @@
 					if( p !== this.parent )
 					{
 						if( p.get('id') === 'gear-list' )
-						{
-							console.log( element.get('name'), element.get('src') );
 							db.insert( element.get('name'), element.get('src') );
-						}
 						else if( p.get('id') === 'device-list' )
 							db.delete( element.get('name') );
 					}
