@@ -12,14 +12,22 @@
 		
 		var sortable, offset = 10, gear = [];
 		
-		var requestDevices = new Request.JSON({
-			url: 'https://www.ifixit.com/api/2.0/categories/all',
-			onSuccess: function(response) {
-				for( i = 0; i < 10; i++ )
+		var deviceRequest = new Request.JSONP({
+			url: 'https://www.ifixit.com/api/1.0/topics/all',
+			callbackKey: 'jsonp',
+			data: {
+				limit: 10,
+				offset: 0
+			},
+			onRequest: function(url) {
+				console.log( 'going' );
+			},
+			onComplete: function(data) {
+				for( var i = 0; i < data.length; i++ )
 				{
-					if( gear.indexOf( response[i] ) === -1 )
+					if( gear.indexOf( data[i].topic ) === -1 )
 					{
-						var d = new iFixitDevice( response[i], sortable );
+						var d = new iFixitDevice( data[i].topic, sortable );
 						d.appendToList( 'device-list' );
 					}
 				}
@@ -59,11 +67,11 @@
 				}
 			});
 			
-			requestDevices.get( {'limit': 10, 'offset': 0 } );
+			deviceRequest.send();
 			
 			$('get-more').addEvent( 'click', function() {
-				requestDevices.get( {'limit': 10, 'offset': offset } );
-				offset += 10;
+				deviceRequest.options.data.offset += 10;
+				deviceRequest.send();
 			});
 		});
 	</script>

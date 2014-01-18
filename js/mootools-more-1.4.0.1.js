@@ -1,6 +1,6 @@
 // MooTools: the javascript framework.
-// Load this file's selection again by visiting: http://mootools.net/more/ebf092a58a778a027b35ed3fc84f72bf 
-// Or build this file again with packager using: packager build More/Drag More/Drag.Move More/Sortables
+// Load this file's selection again by visiting: http://mootools.net/more/465af7772bafff5ffa96db6a5fe44845 
+// Or build this file again with packager using: packager build More/Sortables More/Request.JSONP
 /*
 ---
 copyrights:
@@ -64,4 +64,14 @@ this.clone.setStyle("visibility","visible");this.element.setStyle("opacity",this
 var a=function(){this.removeEvent("cancel",a);d.destroy();};this.effect.element=d;this.effect.start({top:c.top,left:c.left,width:b.width,height:b.height,opacity:0.25}).addEvent("cancel",a).chain(a);
 }else{this.clone.destroy();}this.reset();},reset:function(){this.idle=true;this.fireEvent("complete",this.element);},serialize:function(){var c=Array.link(arguments,{modifier:Type.isFunction,index:function(d){return d!=null;
 }});var b=this.lists.map(function(d){return d.getChildren().map(c.modifier||function(e){return e.get("id");},this);},this);var a=c.index;if(this.lists.length==1){a=0;
-}return(a||a===0)&&a>=0&&a<this.lists.length?b[a]:b;}});
+}return(a||a===0)&&a>=0&&a<this.lists.length?b[a]:b;}});Request.JSONP=new Class({Implements:[Chain,Events,Options],options:{onRequest:function(a){if(this.options.log&&window.console&&console.log){console.log("JSONP retrieving script with url:"+a);
+}},onError:function(a){if(this.options.log&&window.console&&console.warn){console.warn("JSONP "+a+" will fail in Internet Explorer, which enforces a 2083 bytes length limit on URIs");
+}},url:"",callbackKey:"callback",injectScript:document.head,data:"",link:"ignore",timeout:0,log:false},initialize:function(a){this.setOptions(a);},send:function(c){if(!Request.prototype.check.call(this,c)){return this;
+}this.running=true;var d=typeOf(c);if(d=="string"||d=="element"){c={data:c};}c=Object.merge(this.options,c||{});var e=c.data;switch(typeOf(e)){case"element":e=document.id(e).toQueryString();
+break;case"object":case"hash":e=Object.toQueryString(e);}var b=this.index=Request.JSONP.counter++;var f=c.url+(c.url.test("\\?")?"&":"?")+(c.callbackKey)+"=Request.JSONP.request_map.request_"+b+(e?"&"+e:"");
+if(f.length>2083){this.fireEvent("error",f);}Request.JSONP.request_map["request_"+b]=function(){this.success(arguments,b);}.bind(this);var a=this.getScript(f).inject(c.injectScript);
+this.fireEvent("request",[f,a]);if(c.timeout){this.timeout.delay(c.timeout,this);}return this;},getScript:function(a){if(!this.script){this.script=new Element("script",{type:"text/javascript",async:true,src:a});
+}return this.script;},success:function(b,a){if(!this.running){return;}this.clear().fireEvent("complete",b).fireEvent("success",b).callChain();},cancel:function(){if(this.running){this.clear().fireEvent("cancel");
+}return this;},isRunning:function(){return !!this.running;},clear:function(){this.running=false;if(this.script){this.script.destroy();this.script=null;
+}return this;},timeout:function(){if(this.running){this.running=false;this.fireEvent("timeout",[this.script.get("src"),this.script]).fireEvent("failure").cancel();
+}return this;}});Request.JSONP.counter=0;Request.JSONP.request_map={};
