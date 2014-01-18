@@ -13,7 +13,8 @@ ul {
 
 li {
 	display: inline-block;
-	width: 94px;
+	width: 96px;
+	height: 72px;
 	margin: 10px;
 	text-align: center;
 }
