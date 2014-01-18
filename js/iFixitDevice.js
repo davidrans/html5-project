@@ -23,7 +23,6 @@ iFixitDevice.prototype.appendToList = function( parent_id ) {
 				}));
 			},
 			onComplete: function(response) {
-				console.log(response);
 				if( response.image && response.image.text )
 					that.thumbnail = response.image.text + '.thumbnail';
 				else
