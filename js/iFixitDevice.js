@@ -3,7 +3,7 @@ var iFixitDevice = function(name, sorter, thumbnail) {
 	this.sorter = sorter;
 	this.thumbnail = thumbnail;
 	this.li = new Element('li', {
-		name: name,
+		name: name
 	});
 };
 
@@ -16,7 +16,7 @@ iFixitDevice.prototype.appendToList = function( parent_id ) {
 			url: 'https://www.ifixit.com/api/1.0/topic/' + that.name,
 			callbackKey: 'jsonp',
 			onRequest: function(url) {
-				$(parent_id).adopt( that.li );
+				$(parent_id).grab( that.li, 'top' );
 
 				that.li.adopt(new Element( 'img', {
 					src: './images/spinner.gif'

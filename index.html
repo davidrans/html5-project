@@ -16,7 +16,7 @@
 			url: 'https://www.ifixit.com/api/1.0/topics/all',
 			callbackKey: 'jsonp',
 			data: {
-				limit: 10,
+				limit: 20,
 				offset: 0
 			},
 			onComplete: function(data) {
@@ -32,6 +32,7 @@
 		});
 	
 		window.addEvent('domready', function() {
+
 			sortable = new Sortables('ul', {
 				clone: true,
 				revert: true,
@@ -62,6 +63,8 @@
 			});
 			
 			deviceRequest.send();
+			deviceRequest.options.data.limit = 10;
+			deviceRequest.options.data.offset += 10;
 			
 			$('get-more').addEvent( 'click', function() {
 				deviceRequest.options.data.offset += 10;
@@ -79,18 +82,28 @@
 	</script>
 </head>
 <body>
-    <div id="devices">
-		<h3>All Devices</h3>
-		<ul id="device-list"></ul>
-		<p><button id="get-more">Get More Devices</button></p>
-    </div>
-    <div id="middle">
-    	<p><button id="empty-gear">Empty Gearbag</button></p>
-    </div>
-    <div id="gearbag">
-		<h3>Gear Bag</h3>
-		<ul id="gear-list"></ul>
-    </div>
-    <div style="clear: both;"></div>
+	<div id="header">
+		<h1 id="title">Select Your Gear</h1>
+		<div class="left-column">
+			<h3>All Devices</h3>
+			<p><a id="get-more">- Get More Devices -</a></p>
+		</div>
+		<div class="spacer"></div>
+		<div class="right-column">
+			<h3>Gear Bag</h3>
+			<p><a id="empty-gear">- Empty Gearbag -</a></p>
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+	<div id="content">
+		<div id="devices" class="left-column bag">
+			<ul id="device-list"></ul>
+		</div>
+		<div class="spacer"></div>
+		<div id="gearbag" class="right-column bag">
+			<ul id="gear-list"></ul>
+		</div>
+		<div style="clear: both;"></div>
+	</div>
 </body>
 </html>

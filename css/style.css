@@ -1,14 +1,29 @@
-body {
-	min-width: 500px;
+html, body, ul {
+	height: 100%;
 }
 
-h3 {
+body {
+	min-width: 700px;
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	font-family: sans-serif;
+	font-weight: normal;
+	letter-spacing: 5px;
+	margin: 0;
+	padding: 0;
+}
+
+h1, h3, li, p {
 	text-align: center;
 }
 
 ul {
 	margin: 0;
 	padding: 0;
+	overflow: auto;
 }
 
 li {
@@ -16,50 +31,51 @@ li {
 	width: 96px;
 	height: 72px;
 	margin: 10px;
-	text-align: center;
 }
-
-#devices {
-	float: left;
-	width: 40%;
-	outline: 2px solid blue;
-	height: 500px;
-	overflow: auto;
-	min-width: 200px;
-}
-	#devices ul {
-		min-height: 100px;
-	}
-	
-	#devices p {
-		text-align: center;
-	}
-	
-	#devices p button {
-		font-size: 13px;
+	li > img {
+		cursor: move;
 	}
 
-#middle {
-	float: left;
-	width: 20%;
-	height: 500px;
-}
-	#middle p {
-		text-align: center;
-	}
-	
-	#middle p button {
-		font-size: 13px;
-	}	
-#gearbag {
-	float: left;
-	width: 40%;
-	outline: 2px solid red;
-	height: 500px;
-	overflow: auto;
-	min-width: 200px;
+a {
+	font-size: 16px;
+	color: gray;
+	cursor: pointer;
 }
 
-	#gearbag ul {
-		height: 80%;
-	}
+a:hover {
+	color: rgb(88, 88, 96);
+	font-size: 17px;
+}
+
+.left-column {
+	float: left;
+	width: 60%;
+}
+
+.right-column {
+	float: left;
+	width: 30%;
+}
+
+.spacer {
+	float: left;
+	width: 10%;
+	height: 1px;
+}
+
+
+#header {
+	height: 25%;
+}
+
+#title {
+	width: 100%;
+}
+
+#content {
+	height: 75%;
+}
+
+#devices, #gearbag {
+	height: 100%;
+}
