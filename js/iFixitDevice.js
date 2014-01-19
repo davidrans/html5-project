@@ -26,10 +26,7 @@ iFixitDevice.prototype.appendToList = function( parent_id ) {
 				if( response.image && response.image.text )
 					that.thumbnail = response.image.text + '.thumbnail';
 				else
-				{
-					that.li.destroy();
-					return;
-				}
+					that.thumbnail = './images/no_image.jpg';
 
 				that.li.getChildren('img')[0].set( 'src', that.thumbnail );
 				that.sorter.addItems( that.li );
